@@ -11,8 +11,11 @@ target/
 *.iws
 *.iml
 *.ipr
+.gitignore
+
 
 ### Eclipse ###
+.token
 .apt_generated
 .classpath
 .factorypath

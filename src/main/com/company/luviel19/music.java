@@ -1,0 +1,73 @@
+package main.com.company.luviel19;
+
+import main.com.company.luviel19.lavaplayer.PlayerManager;
+import net.dv8tion.jda.api.entities.GuildVoiceState;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.managers.AudioManager;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
+public class music extends ListenerAdapter {
+    public void onMessageReceived(MessageReceivedEvent event) {
+        Message message = event.getMessage();
+
+        AudioManager audioManager = event.getGuild().getAudioManager();
+        AudioChannel voiceChannel = event.getMember().getVoiceState().getChannel();
+        GuildVoiceState userVoiceState = event.getMember().getVoiceState();
+        GuildVoiceState botVoiceState = event.getGuild().getSelfMember().getVoiceState();
+
+        if (message.getContentRaw().startsWith("?play")) {
+            if (!userVoiceState.inAudioChannel()) {
+                message.reply("Вы должны быть в голосовом канале!").queue();
+            } else {
+                if (!botVoiceState.inAudioChannel()) {
+                    audioManager.openAudioConnection(voiceChannel);
+                    audioManager.setSelfDeafened(true);
+                }
+
+                String link = String.join(" ", message.getContentRaw());
+                if (!isUrl(link)) {
+                    link = "ytsearch:" + link;
+                }
+                PlayerManager.getInstance().loadAndPlay(event.getChannel().asTextChannel(), link);
+            }
+        }
+
+        if (message.getContentRaw().startsWith("?skip")) {
+            checkAudioChannel(userVoiceState, botVoiceState, message);
+
+            PlayerManager.getInstance().getMusicManager(event.getGuild()).trackScheduler.nextTrack();
+            message.reply("Успех! Трек пропущен!").queue();
+        }
+
+        if (message.getContentRaw().startsWith("?stop")) {
+            checkAudioChannel(userVoiceState, botVoiceState, message);
+
+            audioManager.closeAudioConnection();
+            PlayerManager.getInstance().getMusicManager(event.getGuild()).trackScheduler.audioPlayer.destroy();
+            message.reply("Успех! Музыка больше не играет!").queue();
+        }
+    }
+
+    public static void checkAudioChannel(GuildVoiceState userVoiceState, GuildVoiceState botVoiceState, Message message) {
+        if (!userVoiceState.inAudioChannel()) {
+            message.reply("Вы не в голосовом канале!").queue();
+        }
+        if (!botVoiceState.inAudioChannel()) {
+            message.reply("Меня нет в голосовом канале!").queue();
+        }
+    }
+
+    public boolean isUrl(String url) {
+        try {
+            new URI(url);
+            return true;
+        } catch (URISyntaxException e) {
+            return false;
+        }
+    }
+}

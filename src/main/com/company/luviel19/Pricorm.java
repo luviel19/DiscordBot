@@ -1,15 +1,15 @@
-import net.dv8tion.jda.api.events.GenericEvent;
+package main.com.company.luviel19;
+
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.util.HashMap;
 
-public class test extends ListenerAdapter {
+public class Pricorm extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event) {
         if (event.getAuthor().isBot() || event.isWebhookMessage()) return;
         String msg = event.getMessage().getContentRaw().replace(" ", "").toLowerCase();
-        HashMap<String, String> data = new HashMap<>() {{
+        HashMap<String, String> data = new HashMap() {{
             this.put("?алоса", "Прикорм:криль,Счастилвый/..../.../.... 2.2кг");
             this.put("?амурбелый", "Амур,карп/укроп,анис/комбикорм/водоросли,кортоф.кубик Троф:15кг");
             this.put("?амурчерный", "Амур-толстолобик, карп медовый/копч. Рыба/комбикорм/Водоросли, картофельный кубик    Троф:15кг");

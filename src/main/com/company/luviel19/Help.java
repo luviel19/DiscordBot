@@ -22,13 +22,16 @@ public class Help extends ListenerAdapter {
         helpers.setTitle("мои команды:");
         helpers.setAuthor(guild.getName());
         //builder.setDescription("123");
-        helpers.addField("?Рыба", "```Даст информацию по рыбе,которую вы введете```", true);
+        helpers.addField("/bot", "```Информация о боте```", true);
         helpers.addBlankField(true);
         helpers.addBlankField(true);
-        helpers.addField("?Водоем","```Даст информацию про водоем(в будущем)```",true);
+        helpers.addField("/info","```Информация о сервере```",true);
         helpers.addBlankField(true);
         helpers.addBlankField(true);
-        helpers.addField("?info","```Даст информацию по серверу```",true);
+        helpers.addField("/ban","```Бан```",true);
+        helpers.addBlankField(true);
+        helpers.addBlankField(true);
+        helpers.addField("?play music","```включение музыки```",true);
         helpers.setThumbnail(guild.getIconUrl());
         return helpers;
     }

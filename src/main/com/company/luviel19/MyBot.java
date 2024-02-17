@@ -25,7 +25,7 @@ public class MyBot extends ListenerAdapter implements EventListener {
         JDA jda = JDABuilder.createDefault(token.getToken())
                 .enableIntents(GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_PRESENCES)// enables explicit access to message.getContentDisplay()
                 .addEventListeners(new Pricorm(), new MyBot(), new Info(), new Help(), new botinfo(),
-                        new ping(), new music())
+                        new ping(), new music(),new gpt())
                 .setActivity(Activity.playing("Settings"))
 
                 .enableIntents(GatewayIntent.MESSAGE_CONTENT)
@@ -35,11 +35,10 @@ public class MyBot extends ListenerAdapter implements EventListener {
         jda.updateCommands().addCommands(
                         Commands.slash("ping", "Calculate ping of the bot"),
 
-                        Commands.slash("help", "help command")
+                        Commands.slash("help", "help command"),
                                 //    Commands.slash("stop", "stop music"),
                                 //   Commands.slash("skip", "skip music"),
                                 //   Commands.slash("play", "play music")
-                                .addOption(OptionType.STRING, "песня", "выбор песни", true),
 
                         Commands.slash("info", "Information about  server"),
 

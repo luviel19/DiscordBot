@@ -1,6 +1,6 @@
 package main.com.company.luviel19.utills;
 
-import main.com.company.luviel19.lavaplayer.Leave;
+
 import main.com.company.luviel19.lavaplayer.PlayerManager;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 
@@ -22,7 +22,7 @@ public class music extends ListenerAdapter {
         AudioManager audioManager = event.getGuild().getAudioManager();
 
 
-        Leave leaveInstance = new Leave();
+
         Thread thread = new Thread(() -> {
             if (commandName.equals("play")) {
 
@@ -34,7 +34,6 @@ public class music extends ListenerAdapter {
 
                     if (!botVoiceState.inAudioChannel()) {
                         VoiceChannel voiceChannel = event.getGuild().getVoiceChannels().get(0);
-                        leaveInstance.startDisconnectTimer(voiceChannel);
                         audioManager.openAudioConnection(userVoiceState.getChannel());
                         audioManager.setSelfDeafened(true);
 

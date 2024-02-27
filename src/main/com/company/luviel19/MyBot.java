@@ -1,55 +1,66 @@
 package main.com.company.luviel19;
 
+import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
+import main.com.company.luviel19.commands.Help;
+import main.com.company.luviel19.commands.Info;
+import main.com.company.luviel19.commands.NameServers;
+import main.com.company.luviel19.commands.botinfo;
+import main.com.company.luviel19.lavaplayer.Leave;
+import main.com.company.luviel19.utills.Pricorm;
+import main.com.company.luviel19.utills.gpt;
+import main.com.company.luviel19.utills.music;
+import main.com.company.luviel19.utills.ping;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.channel.ChannelType;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import ch.qos.logback.classic.Level;
+import net.dv8tion.jda.api.utils.ChunkingFilter;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import org.slf4j.LoggerFactory;
 
 public class MyBot extends ListenerAdapter implements EventListener {
+
+
     public static void main(String[] args) {
         LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
         loggerContext.getLogger("net.dv8tion").setLevel(Level.WARN); // Установите нужный уровень  логирования
         loggerContext.getLogger("org.apache.http").setLevel(Level.ERROR);
 
         JDA jda = JDABuilder.createDefault(token.getToken())
-                .enableIntents(GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_PRESENCES)// enables explicit access to message.getContentDisplay()
+                .enableIntents(GatewayIntent.GUILD_VOICE_STATES,GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_PRESENCES)// enables explicit access to message.getContentDisplay()
                 .addEventListeners(new Pricorm(), new MyBot(), new Info(), new Help(), new botinfo(),
-                        new ping(), new music(),new gpt())
+                        new ping(), new music(), new gpt(),new Leave(),new NameServers())
+                .setChunkingFilter(ChunkingFilter.ALL)
                 .setActivity(Activity.playing("Settings"))
-
+                .setMemberCachePolicy(MemberCachePolicy.ALL)
                 .enableIntents(GatewayIntent.MESSAGE_CONTENT)
                 .setBulkDeleteSplittingEnabled(true)
 
                 .build();
         jda.updateCommands().addCommands(
-                        Commands.slash("ping", "Calculate ping of the bot"),
+                Commands.slash("ping", "Calculate ping of the bot"),
 
-                        Commands.slash("help", "help command"),
-                                //    Commands.slash("stop", "stop music"),
-                                //   Commands.slash("skip", "skip music"),
-                                //   Commands.slash("play", "play music")
+                Commands.slash("help", "help command"),
+              
+                Commands.slash("info", "Information about  server"),
 
-                        Commands.slash("info", "Information about  server"),
+                Commands.slash("play", "The name of the song")
+                        .addOption(OptionType.STRING ,"music", "find music name",true),
+                Commands.slash("skip", "skip music"),
+                Commands.slash("stop", "stop music"),
 
-                        Commands.slash("bot", "Information about  bot"),
-                        Commands.slash("ban", "Ban a user from the server")
+                Commands.slash("bot", "Information about  bot")
 
-                .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.BAN_MEMBERS)) // only usable with ban permissions
-                .setGuildOnly(true) // Ban command only works inside a guild
-                                .addOption(OptionType.USER, "user", "User who should be banned.", true)
-                        .addOption(OptionType.STRING, "reason", "Reason why the user get banned.")
-                        .addOption(OptionType.INTEGER, "deldays", "Delete the messages from the user.", false)
+                        //.setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.BAN_MEMBERS)) // only usable with ban permissions
+                        // Ban command only works inside a guild
+
         ).queue();
 
         //You can also add event listeners to the already built JDA instance
@@ -70,4 +81,7 @@ public class MyBot extends ListenerAdapter implements EventListener {
         }
 
     }
+
+
+
 }

@@ -42,7 +42,8 @@ public class PlayerManager {
             public void trackLoaded(AudioTrack audioTrack) {
                 guildMusicManager.trackScheduler.queue(audioTrack);
 
-                channel.sendMessage("Track " + audioTrack.getInfo().title + ") by " + audioTrack.getInfo().author + " added to queue!").queue();
+                channel.sendMessage("Песня: " + audioTrack.getInfo().title + "\n) Исполнитель " + audioTrack.getInfo().author ).queue();
+
             }
 
             @Override
@@ -51,7 +52,8 @@ public class PlayerManager {
 
                 if (!tracks.isEmpty()) {
                     guildMusicManager.trackScheduler.queue(tracks.get(0));
-                    channel.sendMessage("Track " + tracks.get(0).getInfo().title + " by " + tracks.get(0).getInfo().author + " added to queue!").queue();
+                    channel.sendMessage("Песня: " + tracks.get(0).getInfo().title  + " Добавлена в очередь!"+"\n"+ "Исполнитель: " + tracks.get(0).getInfo().author ).queue();
+
                 }
             }
 

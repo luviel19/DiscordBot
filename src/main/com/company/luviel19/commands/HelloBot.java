@@ -1,4 +1,4 @@
-package main.com.company.luviel19;
+package main.com.company.luviel19.commands;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;

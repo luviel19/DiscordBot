@@ -1,4 +1,4 @@
-package main.com.company.luviel19;
+package main.com.company.luviel19.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
@@ -22,16 +22,9 @@ public class Help extends ListenerAdapter {
         helpers.setTitle("мои команды:");
         helpers.setAuthor(guild.getName());
         //builder.setDescription("123");
-        helpers.addField("/bot", "```Информация о боте```", true);
-        helpers.addBlankField(true);
-        helpers.addBlankField(true);
-        helpers.addField("/info","```Информация о сервере```",true);
-        helpers.addBlankField(true);
-        helpers.addBlankField(true);
-        helpers.addField("/ban","```Бан```",true);
-        helpers.addBlankField(true);
-        helpers.addBlankField(true);
-        helpers.addField("?play music","```включение музыки```",true);
+        helpers.addField("```Информация о боте```", "/bot", false);
+        helpers.addField("```Информация о сервере```","/info",false);
+        helpers.addField("```музыка```","/play , /skip , /stop",false);
         helpers.setThumbnail(guild.getIconUrl());
         return helpers;
     }

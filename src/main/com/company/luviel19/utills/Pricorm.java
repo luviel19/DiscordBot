@@ -1,4 +1,4 @@
-package main.com.company.luviel19;
+package main.com.company.luviel19.utills;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

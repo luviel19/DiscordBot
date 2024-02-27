@@ -21,6 +21,7 @@ public class TrackScheduler extends AudioEventAdapter {
         if (!this.audioPlayer.startTrack(audioTrack, true)) {
             queue.offer(audioTrack);
         }
+
     }
 
     public void nextTrack() {

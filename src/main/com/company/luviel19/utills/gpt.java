@@ -30,12 +30,11 @@ public class gpt extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event) {
         Thread thread = new Thread(() -> {
             if (!event.getAuthor().isBot()) {
-                String KeyWord = "лув";
-                String message = event.getMessage().getContentRaw().replace("лув", " ").replace(",", " ").replace("\n", " ");
+                String message = event.getMessage().getContentRaw().replace("лув", " ").replace("люв"," ").replace("\n", " ");
                 String call = event.getMessage().getContentRaw().toLowerCase().replace(",", " ").toLowerCase();
                 String[] words = call.split(" ");
                 int maxLength = 2000;
-                if (words[0].equals("лув")) {
+                if (words[0].equals("лув") || words[0].equals("люв")) {
                     String response = generateChatGPTResponse(message);
                     String fix = response.replace("\\n", "\n");
                     if (fix.length() > maxLength) {

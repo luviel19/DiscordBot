@@ -7,10 +7,7 @@ import main.com.company.luviel19.commands.Info;
 import main.com.company.luviel19.commands.NameServers;
 import main.com.company.luviel19.commands.botinfo;
 import main.com.company.luviel19.lavaplayer.Disconnect;
-import main.com.company.luviel19.utills.Pricorm;
-import main.com.company.luviel19.utills.gpt;
-import main.com.company.luviel19.utills.music;
-import main.com.company.luviel19.utills.ping;
+import main.com.company.luviel19.utills.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -36,7 +33,7 @@ public class MyBot extends ListenerAdapter implements EventListener {
         JDA jda = JDABuilder.createDefault(token.getToken())
                 .enableIntents(GatewayIntent.GUILD_VOICE_STATES,GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_PRESENCES)// enables explicit access to message.getContentDisplay()
                 .addEventListeners(new Pricorm(), new MyBot(), new Info(), new Help(), new botinfo(),
-                        new ping(), new music(), new gpt(),new NameServers(),new Disconnect())
+                        new ping(), new music(), new gpt(),new NameServers(),new Disconnect(),new Button())
                 .setChunkingFilter(ChunkingFilter.ALL)
                 .setActivity(Activity.playing("Settings"))
                 .setMemberCachePolicy(MemberCachePolicy.ALL)

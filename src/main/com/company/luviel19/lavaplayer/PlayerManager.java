@@ -65,9 +65,8 @@ public class PlayerManager extends ListenerAdapter {
                     guildMusicManager.trackScheduler.queue(tracks.get(1));
                     channel.sendMessageEmbeds(Music(channel.getGuild(),tracks).build()).addActionRow(
                             Button.primary("skip", "skip").withEmoji(Emoji.fromFormatted("⏩")), // Button with only a label
-                            Button.danger("stop","stop").withEmoji(Emoji.fromFormatted("⛔")))
-                            //Button.secondary("leave","leave"))
-                            // Button with only an emoji
+                            Button.danger("stop","stop").withEmoji(Emoji.fromFormatted("⛔")),
+                            Button.secondary("leave","leave").withEmoji(Emoji.fromFormatted("<:pepe_angry:1144030204642205757>")))
                             .queue();
 
 

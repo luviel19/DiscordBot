@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
 
 import java.awt.*;
 
@@ -22,9 +23,11 @@ public class Help extends ListenerAdapter {
         helpers.setTitle("мои команды:");
         helpers.setAuthor(guild.getName());
         //builder.setDescription("123");
-        helpers.addField("```Информация о боте```", "/bot", false);
-        helpers.addField("```Информация о сервере```","/info",false);
-        helpers.addField("```музыка```","/play , /skip , /stop",false);
+        helpers.addField("```Ping:```","</ping:1205993329062318180>",false);
+        helpers.addField("```Команды:```","</help:1205993620751126640>",false);
+        helpers.addField("```Информация о боте```","</bot:1205998588505620531>",false);
+        helpers.addField("```Информация о сервере```", "</info:1206006732350824488>",false);
+        helpers.addField("```музыка```","</play:1209901688161312783>, </skip:1209901688685862942> , </stop:1209901688685862943>",false);
         helpers.setThumbnail(guild.getIconUrl());
         return helpers;
     }

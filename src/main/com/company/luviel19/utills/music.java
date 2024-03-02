@@ -7,6 +7,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import main.com.company.luviel19.lavaplayer.AudioPlayerSendHandler;
 import main.com.company.luviel19.lavaplayer.PlayerManager;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.audio.hooks.ConnectionStatus;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 
@@ -58,19 +59,29 @@ public class music extends ListenerAdapter {
                     PlayerManager.getInstance().loadAndPlay(event.getChannel().asTextChannel(), link);
                 }
             }
-            if (commandName.equals("skip")) {
-                checkAudioChannel(userVoiceState, botVoiceState, commandName);
 
-                PlayerManager.getInstance().getMusicManager(event.getGuild()).trackScheduler.nextTrack();
-                event.reply("Успех! Трек пропущен!").queue();
+
+
+            if (commandName.equals("skip")) {
+                if (audioManager.getConnectionStatus() == ConnectionStatus.CONNECTED
+                        && audioManager.getConnectedChannel().getMembers().contains(event.getGuild().getSelfMember())) {
+                    checkAudioChannel(userVoiceState, botVoiceState, commandName);
+
+                    PlayerManager.getInstance().getMusicManager(event.getGuild()).trackScheduler.nextTrack();
+                    event.reply("Успех! Трек пропущен!").queue();
+                }
             }
 
-            if (commandName.equals("stop")) {
-                checkAudioChannel(userVoiceState, botVoiceState, commandName);
 
-                audioManager.closeAudioConnection();
-                PlayerManager.getInstance().getMusicManager(event.getGuild()).trackScheduler.audioPlayer.destroy();
-                event.reply("Успех! Музыка больше не играет!").complete();
+            if (commandName.equals("stop")) {
+                if (audioManager.getConnectionStatus() == ConnectionStatus.CONNECTED
+                        && audioManager.getConnectedChannel().getMembers().contains(event.getGuild().getSelfMember())) {
+                    checkAudioChannel(userVoiceState, botVoiceState, commandName);
+
+                    audioManager.closeAudioConnection();
+                    PlayerManager.getInstance().getMusicManager(event.getGuild()).trackScheduler.audioPlayer.destroy();
+                    event.reply("Успех! Музыка больше не играет!").complete();
+                }
             }
         });
         thread.start();

@@ -19,16 +19,15 @@ public class Disconnect extends ListenerAdapter {
         GuildVoiceState userVoiceState = voice.getMember().getVoiceState();
         GuildVoiceState botVoiceState = voice.getGuild().getSelfMember().getVoiceState();
         if (x!=null) {
-            int disconnectedChannel = voice.getChannelLeft().getMembers().size();
+            int disconnectedChannel = voice.getChannelLeft().getMembers().stream().filter(member -> !member.getUser().isBot()).toList().size();
             AudioManager audioManager = voice.getGuild().getAudioManager();
 
-            if (disconnectedChannel == 1) {
-                System.out.println(x);
-                if (voice.getChannelLeft().getMembers().get(0).getId().equals(voice.getJDA().getSelfUser().getId())) {
+            if (disconnectedChannel == 0) {
+                System.out.println(disconnectedChannel);
                     audioManager.closeAudioConnection();
                     PlayerManager.getInstance().getMusicManager(voice.getGuild()).trackScheduler.audioPlayer.destroy();
 
-                }
+
             }
         }
     }
